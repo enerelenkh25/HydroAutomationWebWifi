@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hydroponics Automation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Hydroponics Automation</h1>
+  <div class="container">
+    <div class="column">
+      <div class="control">
+        <h2>Sensors and Flowmeter Data</h2>
+        <table>
+          <tr>
+            <th>Sensor</th>
+            <th>Value</th>
+            <th>Unit</th>
+            <th>Graph</th>
+          </tr>
+          <tr>
+            <td>Air Temperature</td>
+            <td><span id="realTimeAirTemp" class="default-value">N/A</span></td>
+            <td>°C</td>
+            <td><button class="button graph-btn" onclick="showGraph('airTemp')">Graph</button></td>
+          </tr>
+          <tr>
+            <td>Air Humidity</td>
+            <td><span id="realTimeAirHumidity" class="default-value">N/A</span></td>
+            <td>%</td>
+            <td><button class="button graph-btn" onclick="showGraph('airHumidity')">Graph</button></td>
+          </tr>
+          <tr>
+            <td>Water Temperature</td>
+            <td><span id="realTimeWaterTemp" class="default-value">N/A</span></td>
+            <td>°C</td>
+            <td><button class="button graph-btn" onclick="showGraph('waterTemp')">Graph</button></td>
+          </tr>
+          <tr>
+            <td>Air Quality (CO2 Level)</td>
+            <td><span id="realTimeCO2" class="default-value">N/A</span></td>
+            <td>ppm</td>
+            <td><button class="button graph-btn" onclick="showGraph('co2')">Graph</button></td>
+          </tr>
+          <tr>
+            <td>EC Value</td>
+            <td><span id="realTimeECValue" class="default-value">N/A</span></td>
+            <td>mS/cm</td>
+            <td><button class="button graph-btn" onclick="showGraph('ecValue')">Graph</button></td>
+          </tr>
+          <tr>
+            <td>pH Value</td>
+            <td><span id="realTimePHValue" class="default-value">N/A</span></td>
+            <td></td>
+            <td><button class="button graph-btn" onclick="showGraph('phValue')">Graph</button></td>
+          </tr>
+          <tr>
+            <td>DO Value</td>
+            <td><span id="realTimeDOValue" class="default-value">N/A</span></td>
+            <td>mg/L</td>
+            <td><button class="button graph-btn" onclick="showGraph('doValue')">Graph</button></td>
+          </tr>
+        </table>
+        <h2>Flowmeter Data</h2>
+        <table>
+          <tr>
+            <th>Pump</th>
+            <th>Flow Rate (L/min)</th>
+          </tr>
+          <tr>
+            <td>Tank</td>
+            <td><span id="flowTankRate" class="default-value">N/A</span></td>
+          </tr>
+          <tr>
+            <td>Filter</td>
+            <td><span id="flowFilterRate" class="default-value">N/A</span></td>
+          </tr>
+          <tr>
+            <td>Reservoir</td>
+            <td><span id="flowReservoirRate" class="default-value">N/A</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="control">
+        <h2>Relays and Components Status</h2>
+        <table>
+          <tr>
+            <th>Component</th>
+            <th>Status</th>
+            <th>Toggle</th>
+          </tr>
+          <tr>
+            <td>Air Ventilation</td>
+            <td><span id="statusAirVent" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleAirVent" onclick="toggleComponent('AIRVENT')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Heater</td>
+            <td><span id="statusHeater" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleHeater" onclick="toggleComponent('HEATER')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Cooler</td>
+            <td><span id="statusCooler" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleCooler" onclick="toggleComponent('COOLER')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Humidifier</td>
+            <td><span id="statusHumidifier" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleHumidifier" onclick="toggleComponent('HUMIDIFIER')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Water Heater</td>
+            <td><span id="statusWaterHeater" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleWaterHeater" onclick="toggleComponent('WATERHEATER')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Water Cooler</td>
+            <td><span id="statusWaterCooler" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleWaterCooler" onclick="toggleComponent('WATERCOOLER')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Air Pump</td>
+            <td><span id="statusAirPump" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleAirPump" onclick="toggleComponent('PUMP1')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Tank Pump</td>
+            <td><span id="statusPumpTank" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="togglePumpTank" onclick="toggleComponent('PUMP2')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Filter Pump</td>
+            <td><span id="statusPumpFilter" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="togglePumpFilter" onclick="toggleComponent('PUMP3')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>Reservoir Pump</td>
+            <td><span id="statusPumpReservoir" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="togglePumpReservoir" onclick="toggleComponent('PUMP2')">Turn ON/OFF</button></td>
+          </tr>
+          <tr>
+            <td>LED Light</td>
+            <td><span id="statusLight" class="relay-status default-value">N/A</span></td>
+            <td><button class="button toggle-btn" id="toggleLight" onclick="toggleComponent('LIGHT')">Turn ON/OFF</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="control">
+        <h2>Control Mode</h2>
+        <label for="controlMode">Select Mode:</label>
+        <select id="controlMode" onchange="changeControlMode()">
+          <option value="auto">Auto</option>
+          <option value="manual">Manual</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <h2>Crop Seed Selection</h2>
+        <label for="seedSelect">Choose a seed:</label>
+        <select id="seedSelect" onchange="changeSeed()">
+          <option value="basil">Basil</option>
+          <option value="tomato">Tomato</option>
+          <option value="lettuce">Lettuce</option>
+          <option value="beans">Beans</option>
+          <option value="beets">Beets</option>
+          <option value="celery">Celery</option>
+          <option value="chard">Chard</option>
+          <option value="cilantro">Cilantro</option>
+          <option value="cucumbers">Cucumbers</option>
+          <option value="kale">Kale</option>
+          <option value="mint">Mint</option>
+          <option value="peppers">Peppers</option>
+          <option value="radishes">Radishes</option>
+          <option value="spinach">Spinach</option>
+          <option value="springOnions">Spring Onions</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <h2>Phase Selection</h2>
+        <label for="phaseSelect">Choose a phase:</label>
+        <select id="phaseSelect" onchange="changePhase()">
+          <option value="Germination">Germination</option>
+          <option value="Seeding">Seeding</option>
+          <option value="Vegetative Growth">Vegetative Growth</option>
+          <option value="Flowering">Flowering</option>
+          <option value="Pollination">Pollination</option>
+          <option value="Fruit">Fruit</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <h2>Boundary Conditions</h2>
+        <ul>
+          <li>Temperature: <span id="temperatureRange">N/A</span> °C</li>
+          <li>Humidity: <span id="humidityRange">N/A</span> %</li>
+          <li>pH Level: <span id="phRange">N/A</span></li>
+          <li>Light Duration: <span id="lightDuration">N/A</span> hours</li>
+        </ul>
+      </div>
+
+      <div class="control">
+        <h2>Graph</h2>
+        <div class="chart-container">
+          <canvas id="sensorGraph"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
